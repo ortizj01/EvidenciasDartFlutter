@@ -11,17 +11,32 @@ class _InfraccionesScreeenState extends State<InfraccionesScreeen> {
   Map<String, int> vehiculo = {};
   TextEditingController placaController = TextEditingController();
   TextEditingController numInfraccionesController = TextEditingController();
+  String error = '';
 
   void guardarInfo() {
     String placa = placaController.text;
-    int numInfracciones = int.parse(numInfraccionesController.text);
+    int numInfracciones;
+
+    try {
+      numInfracciones = int.parse(numInfraccionesController.text);
+    } catch (e) {
+      setState(() {
+        error = 'Ingrese correctamente el número de infracciones';
+      });
+      return;
+    }
 
     if (placa.isNotEmpty && numInfracciones > 0) {
       setState(() {
         vehiculo[placa] = numInfracciones;
+        error = '';
       });
       placaController.clear();
       numInfraccionesController.clear();
+    } else {
+      setState(() {
+        error = 'Ingrese correctamente los datos';
+      });
     }
   }
 
@@ -81,6 +96,7 @@ class _InfraccionesScreeenState extends State<InfraccionesScreeen> {
               ),
               ElevatedButton(
                   onPressed: guardarInfo, child: const Text('Registrar')),
+              Text(error),
               const SizedBox(
                 height: 20,
               ),
