@@ -134,6 +134,7 @@ class _RegistrarState extends State<Registrar> {
                   };
                   Http.postUsuario(usuario);
                   print(usuario);
+
                 },
                 icon: const Icon(Icons.send),
                 label: const Text('Registrar'),
